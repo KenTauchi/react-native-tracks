@@ -13,3 +13,6 @@ export const navigate = (routeName, params) => {
     })
   );
 };
+
+// Need to use the naviagate function to navigate between pages outside of components
+// If inside components, just use withNavigation from react-navigation library as in the NavLink component

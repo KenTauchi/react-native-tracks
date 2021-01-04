@@ -1,43 +1,45 @@
-import React, { useState, useContext } from "react";
-import { View, StyleSheet } from "react-native";
-import { Text, Input, Button } from "react-native-elements";
+import React, { useContext } from "react";
+
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text } from "react-native-elements";
+
+import { NavigationEvents } from "react-navigation";
+
+import AuthForm from "../components/AuthForm";
+import NavLink from "../components/NavLink";
 
 import Spacer from "../components/Spacer";
 
 import { Context as AuthContext } from "../context/AuthContext";
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { state, signup, clearErrMsg } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
-      <Spacer>
-        <Text h3>Sign Up for Tracker</Text>
-      </Spacer>
-      <Input
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}
+      <NavigationEvents
+        // onWillFocus gets called while transitioning to this component screen
+        onWillFocus={clearErrMsg}
+
+        // onDidFocus gets called right after transitioned to this component screen
+        //   onDidFocus={()=>{}}
+
+        // onWillBlur gets called while transitionig away from this component screen
+        // onWillBlur={()=>{})}
+
+        // onDidBlur gets called right after transitionig away from this component screen
+        //   onDidBlur={()=>{}}
       />
-      <Spacer />
-      <Input
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry={true}
+      <AuthForm
+        headerText="Sing Up for Tracker"
+        errorMessage={state.errorMessage}
+        submitButtonText="Sign Up"
+        onSubmit={signup}
       />
-      {state.errorMessage ? (
-        <Text style={styles.errorMessage}>{state.errorMessage}</Text>
-      ) : null}
-      <Spacer>
-        <Button title="Sign Up" onPress={() => signup({ email, password })} />
-      </Spacer>
+      <NavLink
+        text={"Already have an account? Sign in from here"}
+        routeName="Signin"
+      />
     </View>
   );
 };
@@ -53,12 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginBottom: 200,
-  },
-  errorMessage: {
-    fontSize: 16,
-    color: "red",
-    marginLeft: 15,
-    marginTop: 15,
   },
 });
 
