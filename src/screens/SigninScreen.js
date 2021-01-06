@@ -12,6 +12,7 @@ import Spacer from "../components/Spacer";
 
 const SigninScreen = ({ navigation }) => {
   const { state, signin, clearErrMsg } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <NavigationEvents
