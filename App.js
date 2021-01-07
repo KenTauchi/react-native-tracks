@@ -16,6 +16,9 @@ import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
+// Redux
+import { Provider as LocationProvider } from "./src/context/LocationContext";
+
 const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({
@@ -36,8 +39,10 @@ const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App ref={(navigator) => setNavigator(navigator)} />
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <App ref={(navigator) => setNavigator(navigator)} />
+      </AuthProvider>
+    </LocationProvider>
   );
 };
